@@ -1,9 +1,9 @@
-RSpec.describe Dry::Types::Definition, :maybe do
+RSpec.describe Legacy::Dry::Types::Definition, :maybe do
   describe 'with opt-in maybe types' do
     context 'with strict string' do
-      let(:string) { Dry::Types["maybe.strict.string"] }
+      let(:string) { Legacy::Dry::Types["maybe.strict.string"] }
 
-      it_behaves_like 'Dry::Types::Definition without primitive' do
+      it_behaves_like 'Legacy::Dry::Types::Definition without primitive' do
         let(:type) { string }
       end
 
@@ -17,9 +17,9 @@ RSpec.describe Dry::Types::Definition, :maybe do
     end
 
     context 'with coercible string' do
-      let(:string) { Dry::Types["maybe.coercible.string"] }
+      let(:string) { Legacy::Dry::Types["maybe.coercible.string"] }
 
-      it_behaves_like 'Dry::Types::Definition without primitive' do
+      it_behaves_like 'Legacy::Dry::Types::Definition without primitive' do
         let(:type) { string }
       end
 
@@ -34,9 +34,9 @@ RSpec.describe Dry::Types::Definition, :maybe do
   end
 
   describe 'defining coercible Maybe String' do
-    let(:maybe_string) { Dry::Types["coercible.string"].maybe }
+    let(:maybe_string) { Legacy::Dry::Types["coercible.string"].maybe }
 
-    it_behaves_like 'Dry::Types::Definition without primitive' do
+    it_behaves_like 'Legacy::Dry::Types::Definition without primitive' do
       let(:type) { maybe_string }
     end
 
@@ -50,9 +50,9 @@ RSpec.describe Dry::Types::Definition, :maybe do
   end
 
   describe 'defining Maybe String' do
-    let(:maybe_string) { Dry::Types["strict.string"].maybe }
+    let(:maybe_string) { Legacy::Dry::Types["strict.string"].maybe }
 
-    it_behaves_like 'Dry::Types::Definition without primitive' do
+    it_behaves_like 'Legacy::Dry::Types::Definition without primitive' do
       let(:type) { maybe_string }
     end
 

@@ -5,13 +5,13 @@ require 'dry-types'
 
 module SchemaBench
   def self.hash_schema(type)
-    Dry::Types['hash'].public_send(type,
-      email:   Dry::Types['string'],
-      age:     Dry::Types['params.integer'],
-      admin:   Dry::Types['params.bool'],
-      address: Dry::Types['hash'].public_send(type,
-        city: Dry::Types['string'],
-        street: Dry::Types['string']
+    Legacy::Dry::Types['hash'].public_send(type,
+      email:   Legacy::Dry::Types['string'],
+      age:     Legacy::Dry::Types['params.integer'],
+      admin:   Legacy::Dry::Types['params.bool'],
+      address: Legacy::Dry::Types['hash'].public_send(type,
+        city: Legacy::Dry::Types['string'],
+        street: Legacy::Dry::Types['string']
       )
     )
   end
@@ -19,7 +19,7 @@ module SchemaBench
   private_class_method(:hash_schema)
 
   SCHEMAS =
-    Dry::Types::Hash
+    Legacy::Dry::Types::Hash
       .public_instance_methods(false)
       .map { |schema_type| [schema_type, hash_schema(schema_type)] }
       .to_h

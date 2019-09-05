@@ -1,9 +1,9 @@
-RSpec.describe Dry::Types::Hash, :maybe do
-  let(:email) { Dry::Types['maybe.strict.string'] }
+RSpec.describe Legacy::Dry::Types::Hash, :maybe do
+  let(:email) { Legacy::Dry::Types['maybe.strict.string'] }
 
   context 'Symbolized constructor' do
     subject(:hash) do
-      Dry::Types['hash'].symbolized(
+      Legacy::Dry::Types['hash'].symbolized(
         name: 'string',
         email: email
       )
@@ -20,7 +20,7 @@ RSpec.describe Dry::Types::Hash, :maybe do
 
   context 'Schema constructor' do
     subject(:hash) do
-      Dry::Types['hash'].schema(
+      Legacy::Dry::Types['hash'].schema(
         name: 'string',
         email: email
       )
@@ -37,7 +37,7 @@ RSpec.describe Dry::Types::Hash, :maybe do
 
   context 'Strict with defaults' do
     subject(:hash) do
-      Dry::Types['hash'].strict_with_defaults(
+      Legacy::Dry::Types['hash'].strict_with_defaults(
         name: 'string',
         email: email
       )

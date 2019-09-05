@@ -28,7 +28,7 @@
 
 ## Fixed
 
-- `Dry::Types::Hash#try` returns `Failure` instead of throwing an exception on missing keys (GustavoCaso)
+- `Legacy::Dry::Types::Hash#try` returns `Failure` instead of throwing an exception on missing keys (GustavoCaso)
 
 [Compare v0.13.2...v0.13.3](https://github.com/dry-rb/dry-types/compare/v0.13.2...v0.13.3)
 
@@ -50,7 +50,7 @@
 
 ## Added
 
-- `params.int` was added to make the upgrade process in dry-validation smoother (available after you `require 'dry/types/compat/int'`) (flash-gordon)
+- `params.int` was added to make the upgrade process in dry-validation smoother (available after you `require 'legacy/dry/types/compat/int'`) (flash-gordon)
 
 [Compare v0.13.0...v0.13.1](https://github.com/dry-rb/dry-types/compare/v0.13.0...v0.13.1)
 
@@ -58,8 +58,8 @@
 
 ## Changed
 
-- [BREAKING] Renamed `Types::Form` to `Types::Params`. You can opt-in the former name with `require 'dry/types/compat/form_types'`. It will be dropped in the next release (ndrluis)
-- [BREAKING] The `Int` types was renamed to `Integer`, this was the only type named differently from the standard Ruby classes so it has been made consistent. The former name is available with `require 'dry/types/compat/int'` (GustavoCaso + flash-gordon)
+- [BREAKING] Renamed `Types::Form` to `Types::Params`. You can opt-in the former name with `require 'legacy/dry/types/compat/form_types'`. It will be dropped in the next release (ndrluis)
+- [BREAKING] The `Int` types was renamed to `Integer`, this was the only type named differently from the standard Ruby classes so it has been made consistent. The former name is available with `require 'legacy/dry/types/compat/int'` (GustavoCaso + flash-gordon)
 - [BREAKING] Default types are not evaluated on `nil`. Default values are evaluated _only_ if no value were given.
   ```ruby
     type = Types::Strict::String.default("hello")
@@ -67,7 +67,7 @@
     type[] # => "hello"
   ```
   This change allowed to greatly simplify hash schemas, make them a lot more flexible yet predictable (see below).
-- [BREAKING] `Dry::Types.register_class` was removed, `Dry::Types.register` was made private API, do not register your types in the global `dry-types` container, use a module instead, e.g. `Types` (flash-gordon)
+- [BREAKING] `Legacy::Dry::Types.register_class` was removed, `Legacy::Dry::Types.register` was made private API, do not register your types in the global `dry-types` container, use a module instead, e.g. `Types` (flash-gordon)
 - [BREAKING] Enum types don't accept value index anymore. Instead, explicit mapping is supported, see below (flash-gordon)
 
 ## Added
@@ -88,7 +88,7 @@
 
   ```ruby
   intolerant = Types::Hash.schema(name: Types::Strict::String)
-  intolerant[{}] # => Dry::Types::MissingKeyError
+  intolerant[{}] # => Legacy::Dry::Types::MissingKeyError
   tolerant = Types::Hash.schema(name: Types::Strict::String.meta(omittable: true))
   tolerant[{}] # => {}
   tolerant_with_default = Types::Hash.schema(name: Types::Strict::String.meta(omittable: true).default("John"))
@@ -116,11 +116,11 @@
   ```
 - `Enum#include?` is an alias to `Enum#valid?` (d-Pixie + flash-gordon)
 - `Range` was added (GustavoCaso)
-- `Array` types filter out `Undefined` values, if you have an array type with a constructor type as its member, the constructor now can return `Dry::Types::Undefined` to indicate empty value:
+- `Array` types filter out `Undefined` values, if you have an array type with a constructor type as its member, the constructor now can return `Legacy::Dry::Types::Undefined` to indicate empty value:
   ```ruby
   filter_empty_strings = Types::Strict::Array.of(
     Types::Strict::String.constructor { |input|
-      input.to_s.yield_self { |s| s.empty? ? Dry::Types::Undefined : s }
+      input.to_s.yield_self { |s| s.empty? ? Legacy::Dry::Types::Undefined : s }
     }
   )
   filter_empty_strings.(["John", nil, "", "Jane"]) # => ["John", "Jane"]
@@ -129,7 +129,7 @@
   ```ruby
     int_to_string = Types::Hash.map('strict.integer', 'strict.string')
     int_to_string[0 => 'foo'] # => { 0 => "foo" }
-    int_to_string[0 => 1] # Dry::Types::MapError: input value 1 for key 0 is invalid: type?(String, 1)
+    int_to_string[0 => 1] # Legacy::Dry::Types::MapError: input value 1 for key 0 is invalid: type?(String, 1)
   ```
 - Enum supports mappings (bolshakov + flash-gordon)
   ```ruby
@@ -155,7 +155,7 @@
 ## Fixed
 
 - The type compiler was fixed for simple rules such as used for strict type checks (flash-gordon)
-- Fixed an error on `Dry::Types['json.decimal'].try(nil)` (nesaulov)
+- Fixed an error on `Legacy::Dry::Types['json.decimal'].try(nil)` (nesaulov)
 - Fixed an error on calling `try` on an array type built of constrained types (flash-gordon)
 - Implemented `===` for enum types (GustavoCaso)
 
@@ -309,8 +309,8 @@
 ## Changed
 
 - [BREAKING] Renamed `Hash##{schema=>permissive}` (backus)
-- [BREAKING] `dry-monads` dependency was made optional, Maybe types are available after `Dry::Types.load_extensions(:maybe)` (flash-gordon)
-- [BREAKING] `Dry::Types::Struct` and `Dry::Types::Value` have been extracted to [`dry-struct`](https://github.com/dry-rb/dry-struct) (backus)
+- [BREAKING] `dry-monads` dependency was made optional, Maybe types are available after `Legacy::Dry::Types.load_extensions(:maybe)` (flash-gordon)
+- [BREAKING] `Legacy::Dry::Types::Struct` and `Legacy::Dry::Types::Value` have been extracted to [`dry-struct`](https://github.com/dry-rb/dry-struct) (backus)
 - `Types::Form::Bool` supports upcased true/false values (kirs)
 - `Types::Form::{Date,DateTime,Time}` fail gracefully for invalid input (padde)
 - ice_nine dependency has been dropped as it was required by Struct only (flash-gordon)
@@ -418,7 +418,7 @@ Renamed from `dry-data` to `dry-types` and:
 
 ## Added
 
-- `Dry::Types.module` which returns a namespace for inclusion which has all
+- `Legacy::Dry::Types.module` which returns a namespace for inclusion which has all
   built-in types defined as constants (solnic)
 - `Hash#schema` supports default values now (solnic)
 - `Hash#symbolized` passes through keys that are already symbols (solnic)
@@ -442,8 +442,8 @@ Renamed from `dry-data` to `dry-types` and:
 
 ## Changed
 
-- `Dry::Types::Definition` is now the base type definition object (solnic)
-- `Dry::Types::Constructor` is now a type definition with a constructor function (solnic)
+- `Legacy::Dry::Types::Definition` is now the base type definition object (solnic)
+- `Legacy::Dry::Types::Constructor` is now a type definition with a constructor function (solnic)
 
 [Compare v0.5.1...v0.6.0](https://github.com/dry-rb/dry-types/compare/v0.5.1...v0.6.0)
 

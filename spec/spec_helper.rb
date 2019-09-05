@@ -15,6 +15,7 @@ require 'pathname'
 
 SPEC_ROOT = Pathname(__FILE__).dirname
 
+require 'legacy'
 require 'dry-types'
 
 begin
@@ -33,7 +34,7 @@ begin
 rescue LoadError; end
 
 Dir[Pathname(__dir__).join('shared/*.rb')].each(&method(:require))
-require 'dry/types/spec/types'
+require 'legacy/dry/types/spec/types'
 
 Undefined = Dry::Core::Constants::Undefined
 
@@ -42,7 +43,7 @@ Dry::Core::Deprecations.set_logger!(SPEC_ROOT.join('../log/deprecations.log'))
 
 RSpec.configure do |config|
   config.before(:example, :maybe) do
-    Dry::Types.load_extensions(:maybe)
+    Legacy::Dry::Types.load_extensions(:maybe)
   end
 
   config.filter_run_when_matching :focus
@@ -51,7 +52,7 @@ RSpec.configure do |config|
   config.warnings = true
 
   config.before do
-    @types = Dry::Types.container._container.keys
+    @types = Legacy::Dry::Types.container._container.keys
 
     module Test
       def self.remove_constants
@@ -62,9 +63,9 @@ RSpec.configure do |config|
   end
 
   config.after do
-    container = Dry::Types.container._container
+    container = Legacy::Dry::Types.container._container
     (container.keys - @types).each { |key| container.delete(key) }
-    Dry::Types.instance_variable_set('@type_map', Concurrent::Map.new)
+    Legacy::Dry::Types.instance_variable_set('@type_map', Concurrent::Map.new)
 
     Object.send(:remove_const, Test.remove_constants.name)
   end

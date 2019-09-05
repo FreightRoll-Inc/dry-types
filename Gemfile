@@ -20,5 +20,5 @@ group :benchmarks do
   gem 'virtus'
   gem 'fast_attributes'
   gem 'attrio'
-  gem 'dry-struct'
+  gem 'dry-struct', '< 1.0'
 end

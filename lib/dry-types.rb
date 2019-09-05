@@ -1,1 +1,2 @@
-require 'dry/types'
+require 'legacy'
+require 'legacy/dry/types'

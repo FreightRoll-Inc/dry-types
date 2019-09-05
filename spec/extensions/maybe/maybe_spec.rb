@@ -1,8 +1,8 @@
-RSpec.describe Dry::Types::Definition, '#maybe', :maybe do
+RSpec.describe Legacy::Dry::Types::Definition, '#maybe', :maybe do
   context 'with a definition' do
-    subject(:type) { Dry::Types['string'].maybe }
+    subject(:type) { Legacy::Dry::Types['string'].maybe }
 
-    it_behaves_like 'Dry::Types::Definition without primitive'
+    it_behaves_like 'Legacy::Dry::Types::Definition without primitive'
 
     it 'returns None when value is nil' do
       expect(type[nil].value).to be(nil)
@@ -26,9 +26,9 @@ RSpec.describe Dry::Types::Definition, '#maybe', :maybe do
   end
 
   context 'with a strict type' do
-    subject(:type) { Dry::Types['strict.integer'].maybe }
+    subject(:type) { Legacy::Dry::Types['strict.integer'].maybe }
 
-    it_behaves_like 'Dry::Types::Definition without primitive'
+    it_behaves_like 'Legacy::Dry::Types::Definition without primitive'
 
     it 'returns None when value is nil' do
       expect(type[nil].value).to be(nil)
@@ -44,9 +44,9 @@ RSpec.describe Dry::Types::Definition, '#maybe', :maybe do
   end
 
   context 'with a sum' do
-    subject(:type) { Dry::Types['bool'].maybe }
+    subject(:type) { Legacy::Dry::Types['bool'].maybe }
 
-    it_behaves_like 'Dry::Types::Definition without primitive'
+    it_behaves_like 'Legacy::Dry::Types::Definition without primitive'
 
     it 'returns None when value is nil' do
       expect(type[nil].value).to be(nil)

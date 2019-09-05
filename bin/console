@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
 
 require 'bundler/setup'
-require 'dry/types'
+require 'legacy/dry/types'
 
 module Types
-  include Dry::Types.module
+  include Legacy::Dry::Types.module
 end
 
 begin

@@ -4,10 +4,10 @@ require "rspec/core/rake_task"
 task :run_specs do
   require 'rspec/core'
 
-  types_result = RSpec::Core::Runner.run(['spec/dry'])
+  types_result = RSpec::Core::Runner.run(['spec/legacy/dry'])
   RSpec.clear_examples
 
-  Dry::Types.load_extensions(:maybe)
+  Legacy::Dry::Types.load_extensions(:maybe)
   ext_result = RSpec::Core::Runner.run(['spec'])
 
   exit [types_result, ext_result].max
